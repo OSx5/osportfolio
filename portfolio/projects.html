@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects Page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Theme Variables */
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --error-color: #ef4444;
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --text-primary: #1e293b;
+            --border-color: #e2e8f0;
+        }
+
+        :root.dark-mode {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --text-primary: #f1f5f9;
+            --border-color: #334155;
+        }
+
+        .light {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        .dark {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: #334155;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            min-height: 100vh;
+            padding: 2rem;
+            overflow-x: hidden;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: var(--bg-secondary);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px var(--shadow-color);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            cursor: pointer;
+            font-size: 1.5rem;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background-color 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--border-color);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 5rem;
+        }
+
+        .header {
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+            text-align: center;
+            animation: slideDown 0.5s ease;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeIn 1s ease;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            animation: fadeIn 1.2s ease;
+        }
+
+        /* Search and Filters */
+        .controls {
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            font-size: 1.1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .sort-select {
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+        }
+
+        /* Categories */
+        .categories {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 20px;
+            background-color: var(--bg-secondary);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid var(--border-color);
+        }
+
+        .category-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .category-btn:hover {
+            transform: translateY(-2px);
+            border-color: var (--primary-color);
+        }
+
+        /* Projects Grid */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            width: 100%;
+            height: 450px;
+            position: relative;
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .project-image {
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .project-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px var(--shadow-color);
+        }
+
+        .project-card:hover .project-image img {
+            transform: scale(1.1);
+        }
+
+        .project-status {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.875rem;
+            background-color: var (--success-color);
+            color: white;
+        }
+
+        .project-content {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .project-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .project-description {
+            color: var (--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .tag {
+            background-color: var(--bg-primary);
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            transition: all 0.3s ease;
+        }
+
+        .tag:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .project-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-link {
+            flex: 1;
+            padding: 0.75rem;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .demo-link {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .code-link {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        .project-link:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .no-results {
+            text-align: center;
+            grid-column: 1 / -1;
+            padding: 2rem;
+            color: var(--text-secondary);
+            background-color: var(--bg-secondary);
+            border-radius: 12px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Loading Animation */
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--bg-secondary);
+            border-top: 5px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 2rem auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .navbar {
+                padding: 1rem;
+            }
+
+            .filter-controls {
+                flex-direction: column;
+            }
+
+            .categories {
+                justify-content: center;
+            }
+
+            .project-card {
+                margin: 0 1rem;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 1;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        .lamp-container {
+            position: relative;
+            width: 200px;
+            height: 250px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transform-origin: top center;
+            animation: swingEffect 3s ease-in-out infinite;
+        }
+
+        .lamp-wire {
+            width: 4px;
+            height: 60px;
+            background: #444;
+            margin-bottom: -2px;
+        }
+
+        .lamp-body {
+            width: 80px;
+            height: 80px;
+            background: #333;
+            clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+            position: relative;
+        }
+
+        .lamp-bulb {
+            width: 60px;
+            height: 60px;
+            background: #ffffff;
+            border-radius: 50%;
+            position: relative;
+            margin-top: -30px;
+            box-shadow: 0 0 0px #ffd700;
+            animation: turnOn 2s ease-in-out forwards, glowEffect 2s ease-in-out infinite;
+        }
+
+        .light-beam {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle at top, rgba(255,215,0,0.3) 0%, rgba(255,215,0,0) 70%);
+            clip-path: polygon(50% 0%, 100% 100%, 0% 100%);
+            opacity: 0;
+            animation: beamFadeIn 2s ease-in-out forwards;
+            animation-delay: 1s;
+        }
+
+        .loading-text {
+            position: absolute;
+            bottom: 20%;
+            color: #fff;
+            font-size: 1.2rem;
+            opacity: 0;
+            animation: textFadeIn 2s ease-in-out forwards;
+            animation-delay: 0.5s;
+        }
+
+        @keyframes turnOn {
+            0% {
+                box-shadow: 0 0 0px #ffd700;
+                background: #333;
+            }
+            50% {
+                box-shadow: 0 0 30px #ffd700;
+                background: #ffd700;
+            }
+            100% {
+                box-shadow: 0 0 100px #ffd700;
+                background: #ffffff;
+            }
+        }
+
+        @keyframes beamFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) scale(0.8);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) scale(1);
+            }
+        }
+
+        @keyframes textFadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes swingEffect {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        @keyframes glowEffect {
+            0%, 100% { 
+                box-shadow: 0 0 50px var(--primary-color);
+                background: #fff;
+            }
+            50% { 
+                box-shadow: 0 0 100px var(--primary-color);
+                background: var(--primary-color);
+            }
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .theme-toggle i {
+            font-size: 1.2rem;
+            transition: transform 0.5s ease;
+        }
+
+        .theme-toggle:hover i {
+            transform: rotate(360deg);
+        }
+
+        .glowing-text {
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff, 0 0 30px #007acc;
+            animation: glow 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #3498db, 0 0 10px #3498db, 0 0 20px #3498db;
+            }
+            to {
+                text-shadow: 0 0 20px #00d4ff, 0 0 30px #007acc, 0 0 40px #007acc;
+            }
+        }
+
+        /* Update loading overlay styles */
+        .loading-overlay {
+            background: linear-gradient(135deg, #121212, #1a1a1a);
+        }
+
+        .lamp-container {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(-3deg); }
+            50% { transform: translateY(-20px) rotate(3deg); }
+        }
+
+        .lamp-bulb {
+            animation: 
+                turnOn 2s ease-in-out forwards,
+                pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                box-shadow: 
+                    0 0 60px #ffd700,
+                    0 0 100px #ffd700,
+                    0 0 140px var(--primary-color);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 
+                    0 0 80px #ffd700,
+                    0 0 120px #ffd700,
+                    0 0 160px var(--primary-color);
+                transform: scale(1.1);
+            }
+        }
+
+        .light-beam {
+            animation: 
+                beamFadeIn 1s ease-in-out forwards,
+                beamPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes beamPulse {
+            0%, 100% { opacity: 0.3; transform: translateX(-50%) scale(1); }
+            50% { opacity: 0.5; transform: translateX(-50%) scale(1.1); }
+        }
+
+        .loading-text {
+            font-size: 1.4rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(45deg, #fff, #ffd700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textGlow 2s ease-in-out infinite;
+        }
+
+        @keyframes textGlow {
+            0%, 100% { filter: drop-shadow(0 0 2px #ffd700); }
+            50% { filter: drop-shadow(0 0 10px #ffd700); }
+        }
+
+        /* Mobile Responsive Styles */
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem 0;
+            }
+
+            .navbar {
+                padding: 1rem;
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 1000;
+            }
+
+            .main-content {
+                margin-top: 4rem;
+                padding: 0 1rem;
+            }
+
+            .controls {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+
+            .filter-controls {
+                flex-direction: column;
+                width: 100%;
+            }
+
+            .sort-select {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 0;
+            }
+
+            .project-card {
+                margin: 0;
+                height: auto;
+                min-height: 400px;
+            }
+
+            .project-image {
+                height: 200px;
+            }
+
+            .project-content {
+                padding: 1rem;
+            }
+
+            .project-tags {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .tag {
+                font-size: 0.75rem;
+                padding: 0.2rem 0.5rem;
+            }
+
+            .search-input {
+                font-size: 1rem;
+                padding: 0.75rem 1rem 0.75rem 2.5rem;
+            }
+
+            .search-icon {
+                left: 0.75rem;
+                font-size: 1rem;
+            }
+
+            .header {
+                padding: 0 1rem;
+            }
+
+            .title {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        /* Small screen optimizations */
+        @media (max-width: 480px) {
+            .project-card {
+                min-height: 350px;
+            }
+
+            .project-image {
+                height: 180px;
+            }
+
+            .project-title {
+                font-size: 1.1rem;
+            }
+
+            .project-description {
+                font-size: 0.9rem;
+            }
+
+            .filter-controls select {
+                font-size: 0.9rem;
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="lamp-container">
+            <div class="lamp-wire"></div>
+            <div class="lamp-body"></div>
+            <div class="lamp-bulb">
+                <div class="light-beam"></div>
+            </div>
+            <div class="loading-text" style="font-weight: bold; letter-spacing: 1px;">
+                Loading Projects<span class="dots">...</span>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar">
+    <div class="logo" style="font-weight: 700; color: var(--primary-color); font-size: 1.2rem;">OUSSAMA SEMAMA</div>
+    <div class="nav-actions" style="display: flex; gap: 0.5rem; align-items: center;">
+        <button class="theme-toggle" aria-label="Toggle Dark Mode" title="Toggle Dark Mode" style="padding: 0.5rem;">
+            <i class="fas fa-moon"></i>
+        </button>
+        <a href="test.html" title="Back to Home" style="color: var(--text-primary); font-size: 1.2rem; padding: 0.5rem;">
+            <i class="fas fa-home"></i>
+        </a>
+    </div>
+</nav>
+
+    <main class="main-content">
+        <header class="header" style="margin-top: 5rem;">
+            <h1 class="title" style="color: var(--primary-color);">All Projects</h1>
+            <p class="subtitle">My Portfolio Collection</p>
+        </header>
+
+        <div class="controls">
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" id="searchInput" placeholder="Search projects by title, description, or technologies...">
+            </div>
+            <div class="filter-controls">
+                <select class="sort-select" id="statusFilter">
+                    <option value="all">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="completed">Completed</option>
+                    <option value="planned">Planned</option>
+                </select>
+                <select class="sort-select" id="sortSelect">
+                    <option value="newest">Newest First</option>
+                    <option value="oldest">Oldest First</option>
+                    <option value="nameAsc">Name A-Z</option>
+                    <option value="nameDesc">Name Z-A</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="projects-grid" id="projectsGrid">
+            <!-- Projects will be loaded here dynamically -->
+        </div>
+    </main>
+
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.getElementById('loadingOverlay');
+    const dots = document.querySelector('.dots');
+    let dotCount = 0;
+
+    // Animated loading dots
+    const animateDots = setInterval(() => {
+        dotCount = (dotCount + 1) % 4;
+        dots.textContent = '.'.repeat(dotCount);
+    }, 500);
+
+    // Only show loading on first visit to projects page
+    if (!sessionStorage.getItem('projectsLoadDone')) {
+        setTimeout(() => {
+            clearInterval(animateDots);
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 800);
+        }, 2000);
+        sessionStorage.setItem('projectsLoadDone', 'true');
+    } else {
+        overlay.style.display = 'none';
+        clearInterval(animateDots);
+    }
+
+    // Initialize other functionality
+    loadAndFilterProjects();
+    initTheme();
+});
+
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
+function loadAndFilterProjects() {
+    const projects = JSON.parse(localStorage.getItem('projects')) || [];
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const status = document.getElementById('statusFilter').value;
+    const sortMethod = document.getElementById('sortSelect').value;
+
+    let filteredProjects = projects.filter(project => {
+        if (status !== 'all' && project.status !== status) return false;
+        
+        return project.title.toLowerCase().includes(searchTerm) ||
+               project.description.toLowerCase().includes(searchTerm) ||
+               (project.technologies && project.technologies.some(tech => 
+                   tech.toLowerCase().includes(searchTerm)
+               ));
+    });
+
+    // Sort projects
+    filteredProjects.sort((a, b) => {
+        switch(sortMethod) {
+            case 'newest':
+                return new Date(b.date || 0) - new Date(a.date || 0);
+            case 'oldest':
+                return new Date(a.date || 0) - new Date(b.date || 0);
+            case 'nameAsc':
+                return a.title.localeCompare(b.title);
+            case 'nameDesc':
+                return b.title.localeCompare(a.title);
+            default:
+                return 0;
+        }
+    });
+
+    renderProjects(filteredProjects);
+}
+
+function renderProjects(projects) {
+    const projectsGrid = document.getElementById('projectsGrid');
+    
+    if (projects.length === 0) {
+        projectsGrid.innerHTML = '<div class="no-results">No projects found</div>';
+        return;
+    }
+
+    projectsGrid.innerHTML = projects.map(project => {
+        const projectCard = `
+            <div class="project-card" style="cursor: ${project.projectLink ? 'pointer' : 'default'}">
+                <div class="project-image">
+                    ${project.image ? 
+                        `<img src="${project.image}" alt="${project.title}">` : 
+                        `<div class="project-placeholder" style="height: 200px; background: var(--primary-color); display: flex; align-items: center; justify-content: center; color: white;">
+                            <span style="font-size: 2rem;">${project.title[0]}</span>
+                        </div>`
+                    }
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">
+                        ${project.title}
+                        ${project.projectLink ? '<i class="fas fa-external-link-alt" style="font-size: 0.8em; margin-left: 5px;"></i>' : ''}
+                    </h3>
+                    <p class="project-description">${project.description}</p>
+                    <div class="project-tags">
+                        ${project.technologies.map(tech => `
+                            <span class="tag">${tech}</span>
+                        `).join('')}
+                    </div>
+                </div>
+                <div class="project-status" style="background-color: ${getStatusColor(project.status)}">
+                    ${project.status}
+                </div>
+            </div>
+        `;
+
+        if (project.projectLink) {
+            return `<a href="${project.projectLink}" target="_blank" style="text-decoration: none; color: inherit;">
+                ${projectCard}
+            </a>`;
+        }
+        return projectCard;
+    }).join('');
+}
+
+function getStatusColor(status) {
+    switch(status.toLowerCase()) {
+        case 'active': return 'var(--success-color)';
+        case 'completed': return 'var(--primary-color)';
+        case 'planned': return 'var(--warning-color)';
+        default: return 'var(--text-secondary)';
+    }
+}
+
+// Add at the end of your existing script
+// Dark mode toggle
+const darkModeToggle = () => {
+    const root = document.documentElement;
+    const isDarkMode = root.classList.toggle('dark-mode');
+    const themeToggle = document.querySelector('.theme-toggle');
+    
+    themeToggle.innerHTML = isDarkMode ? 
+        '<i class="fas fa-sun"></i><span class="theme-text">Light Mode</span>' : 
+        '<i class="fas fa-moon"></i><span class="theme-text">Dark Mode</span>';
+    
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+};
+
+// Initialize theme
+document.addEventListener('DOMContentLoaded', () => {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+        document.documentElement.classList.add('dark-mode');
+        document.querySelector('.theme-toggle').innerHTML = '<i class="fas fa-sun"></i><span class="theme-text">Light Mode</span>';
+    }
+    
+    // Add theme toggle listener
+    document.querySelector('.theme-toggle').addEventListener('click', darkModeToggle);
+
+    // Handle loading screen
+    if (!sessionStorage.getItem('pageLoaded')) {
+        setTimeout(() => {
+            const overlay = document.getElementById('loadingOverlay');
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 800);
+        }, 2000);
+        sessionStorage.setItem('pageLoaded', 'true');
+    } else {
+        document.getElementById('loadingOverlay').style.display = 'none';
+    }
+});
+
+// Add event listeners for filters
+document.getElementById('searchInput').addEventListener('input', debounce(loadAndFilterProjects, 300));
+document.getElementById('statusFilter').addEventListener('change', loadAndFilterProjects);
+document.getElementById('sortSelect').addEventListener('change', loadAndFilterProjects);
+
+// Enhanced loading effect
+document.addEventListener('DOMContentLoaded', () => {
+    const overlay = document.getElementById('loadingOverlay');
+    
+    if (!sessionStorage.getItem('projectsLoadDone')) {
+        document.body.style.overflow = 'hidden';
+        overlay.style.display = 'flex';
+        
+        const loadingTexts = [
+            'Illuminating Projects...',
+            'Gathering Ideas...',
+            'Preparing Display...'
+        ];
+        let textIndex = 0;
+        
+        // Cycle through loading texts
+        const textInterval = setInterval(() => {
+            document.querySelector('.loading-text').textContent = loadingTexts[textIndex];
+            textIndex = (textIndex + 1) % loadingTexts.length;
+        }, 1500);
+
+        setTimeout(() => {
+            clearInterval(textInterval);
+            overlay.style.opacity = '0';
+            document.body.style.overflow = '';
+            setTimeout(() => overlay.style.display = 'none', 800);
+            sessionStorage.setItem('projectsLoadDone', 'true');
+        }, 3000);
+    } else {
+        overlay.style.display = 'none';
+        loadAndFilterProjects();
+    }
+});
+</script>
+</body>
+</html>
